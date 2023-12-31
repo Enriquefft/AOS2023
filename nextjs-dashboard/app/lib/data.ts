@@ -10,8 +10,18 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+// import { unstable_noStore as noStore } from 'next/cache';
+
+async function getSampleInfo() {
+  await new Promise((resolve) => setTimeout(resolve, 9000));
+  console.log('Data fetch completed after 9 seconds.');
+
+  return 'Sample Info';
+}
+
 export async function fetchRevenue() {
   // Add noStore() here prevent the response from being cached.
+  // noStore();
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
 
   try {
@@ -19,11 +29,9 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-
-    // console.log('Data fetch completed after 3 seconds.');
+    await getSampleInfo();
 
     return data.rows;
   } catch (error) {
@@ -118,6 +126,7 @@ export async function fetchFilteredInvoices(
 
     return invoices.rows;
   } catch (error) {
+    console.log('data:', query, currentPage);
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoices.');
   }
@@ -179,8 +188,7 @@ export async function fetchCustomers() {
       ORDER BY name ASC
     `;
 
-    const customers = data.rows;
-    return customers;
+    return data.rows;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
