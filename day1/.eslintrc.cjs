@@ -1,5 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
+const drizzleRules = {
+  "drizzle/enforce-delete-with-where": [
+    "error",
+    {
+      // Here you can specify the models you are using
+      drizzleObjectName: ["db"],
+    },
+  ],
+};
+
 const reactRules = {
   "@typescript-eslint/naming-convention": [
     "error",
@@ -16,6 +26,9 @@ const reactRules = {
   "react/jsx-no-bind": "off",
 
   "react/jsx-no-literals": "off",
+  "react/jsx-max-depth": ["warn", { max: 4 }],
+
+  "react/require-default-props": "off",
 };
 
 const jsRules = {
@@ -32,7 +45,7 @@ const jsRules = {
     "error",
     {
       min: 3,
-      exceptions: ["_", "__"],
+      exceptions: ["_", "__", "id", "db"],
     },
   ],
   "sort-imports": "off",
@@ -95,7 +108,7 @@ const parserOptions = {
 };
 
 module.exports = {
-  ignorePatterns: ["**/old/**/*"],
+  ignorePatterns: ["**/old/**/*", "next-env.d.ts"],
   env: {
     es2021: true,
     node: true,
@@ -109,8 +122,9 @@ module.exports = {
     "plugin:@typescript-eslint/all",
     "prettier",
     "plugin:jsx-a11y/strict",
+    "plugin:drizzle/all",
   ],
-  rules: jsRules,
+  rules: Object.assign(jsRules, drizzleRules),
   overrides: [
     {
       files: ["./**/*.cjs", "./**/*.js"],
