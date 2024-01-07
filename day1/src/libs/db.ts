@@ -8,7 +8,6 @@ const dbCredentials = {
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
 };
-console.log("db creds:", dbCredentials);
 
 export const connection = connect(dbCredentials);
 

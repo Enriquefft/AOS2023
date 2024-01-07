@@ -143,4 +143,7 @@ module.exports = {
       rules: reactRules,
     },
   ],
+	globals: {
+		React:'readonly',
+	}
 };

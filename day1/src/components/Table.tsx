@@ -1,29 +1,15 @@
-import { getChilds } from "@/libs/utils";
+import type { SelectChild } from "@/libs/schemas/Childs";
 
-import type { Tag } from "@/libs/tags";
-
-type tableProps = {
-  page: number;
-  nameQuery: string | null;
-  tags: Tag;
+type TableProps = {
+  readonly childs: SelectChild[];
 };
 
 /**
  *
- * @param root0
- * @param root0.page
- * @param root0.nameQuery
- * @param root0.tags
+ * @param {TableProps} props Props
+ * @returns {React.ReactNode} JSX Table representation
  */
-export default async function Table({
-  page,
-  nameQuery,
-  tags,
-}: Readonly<tableProps>) {
-  console.log("table:", page, nameQuery, tags);
-
-  const childs = await getChilds(page, nameQuery, tags);
-
+export default function Table({ childs }: TableProps) {
   return (
     <div className="w-full p-8">
       <table className="w-full">
